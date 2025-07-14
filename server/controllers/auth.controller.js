@@ -44,3 +44,12 @@ export const login = async (req, res, next) => {
     next(err);
   }
 };
+
+export const logoutUser = (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
+  return res.status(200).json({ message: "Logged out successfully" });
+};

@@ -1,9 +1,19 @@
-import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Navbar from "./components/Navbar";
+import HomePage from "./pages/HomePage";
 
-const App = () => {
+function App() {
+  const user = useSelector((state) => state.auth.user);
+
   return (
-    <div>App</div>
-  )
+    <Router>
+      {user && <Navbar />}
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;

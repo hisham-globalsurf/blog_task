@@ -1,4 +1,4 @@
-import * as blogService from '../services/blog.service.js';
+import * as blogService from "../services/blog.service.js";
 
 // Get all blogs (home page)
 export const getAllBlogs = async (req, res, next) => {
@@ -30,10 +30,18 @@ export const getMyBlogs = async (req, res, next) => {
   }
 };
 
-// Create blog
+// create blog
 export const createBlog = async (req, res, next) => {
   try {
-    const blog = await blogService.createBlog(req.body, req.user.id);
+    const attachments = req.files?.map((file) => file.path);
+
+    const blogData = {
+      ...req.body,
+      attachments,
+    };
+
+    const blog = await blogService.createBlog(blogData, req.user.id);
+
     res.status(201).json({ success: true, blog });
   } catch (err) {
     next(err);
@@ -43,7 +51,19 @@ export const createBlog = async (req, res, next) => {
 // Update blog
 export const updateBlog = async (req, res, next) => {
   try {
-    const blog = await blogService.updateBlog(req.params.id, req.body, req.user.id);
+    const attachments = req.files?.map((file) => file.path);
+
+    const blogData = { ...req.body };
+    if (attachments.length) {
+      blogData.attachments = [...existingBlog.attachments, ...attachments];
+    }
+
+    const blog = await blogService.updateBlog(
+      req.params.id,
+      blogData,
+      req.user.id
+    );
+
     res.json({ success: true, blog });
   } catch (err) {
     next(err);
@@ -54,7 +74,7 @@ export const updateBlog = async (req, res, next) => {
 export const deleteBlog = async (req, res, next) => {
   try {
     await blogService.deleteBlog(req.params.id, req.user.id);
-    res.json({ success: true, message: 'Blog deleted' });
+    res.json({ success: true, message: "Blog deleted" });
   } catch (err) {
     next(err);
   }

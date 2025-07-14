@@ -16,3 +16,4 @@ export const protect = (req, res, next) => {
     return next(new CustomError('Invalid token', 401));
   }
 };
+
