@@ -30,6 +30,7 @@ export const updateBlog = createAsyncThunk(
   "blog/update",
   blogService.updateBlog
 );
+
 export const deleteBlog = createAsyncThunk(
   "blog/delete",
   blogService.deleteBlog

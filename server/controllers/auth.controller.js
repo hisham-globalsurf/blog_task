@@ -35,6 +35,7 @@ export const login = async (req, res, next) => {
 
     res.cookie("token", token, {
       httpOnly: true,
+      secure: true,
       sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
@@ -52,4 +53,19 @@ export const logoutUser = (req, res) => {
     sameSite: "none",
   });
   return res.status(200).json({ message: "Logged out successfully" });
+};
+
+//load current user
+export const getMe = async (req, res, next) => {
+  try {
+    const user = await authService.getMeService(req.user.id);
+
+    if (!user) {
+      return next(new CustomError("User not found", 404));
+    }
+
+    res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
 };

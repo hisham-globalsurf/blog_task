@@ -3,7 +3,6 @@ import CustomError from '../utils/customError.js';
 
 export const protect = (req, res, next) => {
   const token = req.cookies.token;
-
   if (!token) {
     return next(new CustomError('Not authorized', 401));
   }

@@ -27,19 +27,19 @@ export const createBlog = async (blogData, userId) => {
   return blog;
 };
 
-// Update blog
-export const updateBlog = async (id, blogData, userId) => {
-  const blog = await Blog.findById(id);
-  if (!blog) throw new CustomError('Blog not found', 404);
+// services/blog.service.js
 
-  if (blog.createdBy.toString() !== userId) {
-    throw new CustomError('Not authorized to update this blog', 403);
-  }
+export const updateBlogService = async (blog, updateData) => {
+  blog.title = updateData.title || blog.title;
+  blog.description = updateData.description || blog.description;
+  blog.category = updateData.category || blog.category;
+  blog.tags = updateData.tags || blog.tags;
+  blog.attachments = updateData.attachments || blog.attachments;
 
-  Object.assign(blog, blogData);
   await blog.save();
   return blog;
 };
+
 
 // Delete blog
 export const deleteBlog = async (id, userId) => {

@@ -1,29 +1,36 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllBlogs } from "../features/blog/blogSlice";
-import BlogList from "../components/BlogList";
-import CreateBlogDrawer from "../components/CreateBlogDrawer";
+import BlogList from "../components/blog/BlogList";
+import CreateBlogSheet from "../components/blog/CreateBlogSheet";
 import { useNavigate } from "react-router-dom";
-import HeroBanner from "../components/HeroBanner";
+import HeroBanner from "../components/home/HeroBanner";
 import { Button } from "@/components/ui/button";
-import { User } from "lucide-react";
+import { User, PlusCircle } from "lucide-react";
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { blogs, isLoading } = useSelector((state) => state.blog);
-  console.log(blogs);
-
+  
   const { user } = useSelector((state) => state.auth);
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [open, setOpen] = useState(false);
+
 
   useEffect(() => {
     dispatch(fetchAllBlogs());
   }, [dispatch]);
 
+  const filteredBlogs = blogs.filter(blog =>
+  blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  blog.description.toLowerCase().includes(searchQuery.toLowerCase())
+);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      <CreateBlogSheet open={open} setOpen={setOpen} />
       <HeroBanner searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       {/* Main Content */}
@@ -38,7 +45,7 @@ const HomePage = () => {
 
           {user ? (
             <Button
-              onClick={() => setOpen(true)} // Or open your drawer however you do it
+              onClick={() => setOpen(true)}
               variant="default"
               className="bg-blue-600 text-white hover:bg-blue-700"
             >
@@ -52,12 +59,12 @@ const HomePage = () => {
               className="border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-300 bg-transparent"
             >
               <User className="w-4 h-4 mr-2" />
-              Login/Register to Create Blog
+              Login to Create Blog
             </Button>
           )}
         </div>
 
-        {isLoading ? <p>Loading...</p> : <BlogList blogs={blogs} />}
+        {isLoading ? <p>Loading...</p> : <BlogList blogs={filteredBlogs} />}
       </div>
     </div>
   );

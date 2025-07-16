@@ -118,3 +118,170 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Hide scrollbar  */
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+  /* Safari and Chrome */
+}
+
+
+/* Fix autofill background for input fields */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-text-fill-color: black !important; 
+}
+
+/* Add these styles to your global CSS file */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom backdrop blur for older browsers */
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Prose styles for better text formatting */
+.prose {
+  color: #374151;
+  max-width: none;
+}
+
+.prose p {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.prose-lg {
+  font-size: 1.125rem;
+  line-height: 1.7777778;
+}
+
+.prose-lg p {
+  margin-top: 1.3333333em;
+  margin-bottom: 1.3333333em;
+}
+
+/* Animation keyframes */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Responsive columns for masonry layout */
+.columns-1 {
+  column-count: 1;
+}
+
+@media (min-width: 640px) {
+  .sm\:columns-2 {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:columns-3 {
+    column-count: 3;
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl\:columns-4 {
+    column-count: 4;
+  }
+}
+
+.break-inside-avoid {
+  break-inside: avoid;
+}
+
+/* Custom card styles */
+.bg-card {
+  background-color: #ffffff;
+}
+
+.text-card-foreground {
+  color: #0f172a;
+}
+
+.bg-primary {
+  background-color: #3b82f6;
+}
+
+.text-primary-foreground {
+  color: #ffffff;
+}
+
+.bg-secondary {
+  background-color: #f1f5f9;
+}
+
+.text-secondary-foreground {
+  color: #0f172a;
+}
+
+.border-input {
+  border-color: #e2e8f0;
+}
+
+.bg-background {
+  background-color: #ffffff;
+}
+
+.hover\:bg-accent:hover {
+  background-color: #f8fafc;
+}
+
+.hover\:text-accent-foreground:hover {
+  color: #0f172a;
+}
+
+.focus\:ring-ring:focus {
+  --tw-ring-color: #3b82f6;
+}
+
+.focus\:ring-offset-2:focus {
+  --tw-ring-offset-width: 2px;
+}

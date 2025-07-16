@@ -20,3 +20,9 @@ export const login = async ({ email, password }) => {
 
   return user;
 };
+
+//load current user
+export const getMeService = async (userId) => {
+  const user = await User.findById(userId).select("-password");
+  return user;
+};
