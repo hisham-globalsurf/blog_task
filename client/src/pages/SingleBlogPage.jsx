@@ -76,7 +76,7 @@ const SingleBlogPage = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         {/* Image Gallery */}
         {singleBlog.attachments && singleBlog.attachments.length > 0 && (
           <Card className="mb-6 overflow-hidden shadow-xl border-0 bg-white/80 backdrop-blur-sm">

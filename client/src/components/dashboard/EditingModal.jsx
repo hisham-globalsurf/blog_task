@@ -65,7 +65,7 @@ export default function EditBlogModal({ blog, onUpdate, children }) {
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="w-full max-w-xl md:max-w-3xl overflow-hidden">
-        <DialogHeader>Edit Blog</DialogHeader>
+        <DialogHeader className={"font-bold text-[20px]"}>Edit Blog</DialogHeader>
 
         <div className="space-y-4 py-4 max-h-[70vh] overflow-y-auto scrollbar-hidden">
           <div className="grid md:grid-cols-2 md:gap-6">
