@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchMyBlogs, deleteBlog } from "../features/blog/blogSlice"
+import { fetchMyBlogs, deleteBlog } from "../../features/blog/blogSlice"
 import MyBlogsTable from "@/components/dashboard/MyBlogs"
 export default function Dashboard() {
   const dispatch = useDispatch()

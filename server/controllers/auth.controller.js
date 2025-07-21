@@ -4,11 +4,12 @@ import generateToken from "../utils/generateToken.js";
 export const register = async (req, res, next) => {
   try {
     const user = await authService.register(req.body);
-    const token = generateToken(user._id);
+    const token = generateToken(user);
 
     const safeUser = {
       _id: user._id,
       name: user.name,
+      role: user.role,
     };
 
     res.cookie("token", token, {
@@ -26,11 +27,12 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const user = await authService.login(req.body);
-    const token = generateToken(user._id);
+    const token = generateToken(user);
 
     const safeUser = {
       _id: user._id,
       name: user.name,
+      role: user.role,
     };
 
     res.cookie("token", token, {

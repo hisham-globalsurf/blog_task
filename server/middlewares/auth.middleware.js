@@ -16,3 +16,11 @@ export const protect = (req, res, next) => {
   }
 };
 
+
+// super admin middleware
+export const superAdminOnly = (req, res, next) => {
+  if (!req.user || req.user.role !== 'admin') {
+    return next(new CustomError('Access denied: Admins only', 403));
+  }
+  next();
+};

@@ -35,7 +35,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import EditBlogModal from "./EditingModal";
-import { updateBlog } from "@/features/blog/blogSlice";
+import { fetchAllBlogs, updateBlog } from "@/features/blog/blogSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -54,7 +54,9 @@ export default function MyBlogs({ data, onDelete }) {
           id: updatedBlog._id,
           data: updatedBlog,
         })
-      ).unwrap();
+      ).unwrap().then(()=>{
+        dispatch(fetchAllBlogs())
+      })
 
       toast.success("Blog updated!");
     } catch (err) {
@@ -209,7 +211,13 @@ export default function MyBlogs({ data, onDelete }) {
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      onClick={(e) => e.stopPropagation()} 
+                      onClick={(e) => {
+                        if (cell.column.id === "title" || cell.column.id === "category" || cell.column.id === "tags") {
+                          navigate(`/blog/${row.original._id}`);
+                        } else {
+                          e.stopPropagation();
+                        }
+                      }}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,

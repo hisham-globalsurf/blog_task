@@ -6,34 +6,46 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { user, loadingUser } = useSelector((state) => state.auth);
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation(); 
+  const location = useLocation();
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setDropdownOpen(false);
-    }
-  };
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
 
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => {
-    document.removeEventListener("mousedown", handleClickOutside);
-  };
-}, []);
-
-
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleLogout = () => {
     dispatch(logout());
   };
 
-  const isDashboard = location.pathname === "/dashboard";
-  const navLabel = isDashboard ? "Home" : "Dashboard";
-  const navTarget = isDashboard ? "/" : "/dashboard";
+  const isOnDashboard =
+    location.pathname === "/dashboard" ||
+    location.pathname === "/adminDashboard";
+  const navLabel = isOnDashboard ? "Home" : "Dashboard";
+
+  const handleDashboardClick = () => {
+    if (loadingUser || !user) return;
+
+    if (isOnDashboard) {
+      navigate("/");
+    } else if (user.role === "admin") {
+      navigate("/adminDashboard");
+    } else {
+      navigate("/dashboard");
+    }
+  };
 
   return (
     <nav className="w-full bg-gradient-to-r from-sky-400 via-cyan-500 to-indigo-600 text-white border-b border-white/50 px-6 py-4 flex justify-between items-center shadow-sm">
@@ -46,7 +58,13 @@ const Navbar = () => {
 
       {/* Profile Dropdown */}
       <div className="flex justify-center items-center gap-4 md:gap-10 cursor-pointer">
-        <h1 onClick={() => navigate(navTarget)}>{navLabel}</h1>
+        <h1
+          onClick={handleDashboardClick}
+          className="hover:underline-offset-4 hover:underline"
+        >
+          {navLabel}
+        </h1>
+
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}

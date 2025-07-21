@@ -15,11 +15,16 @@ export const login = async ({ email, password }) => {
   const user = await User.findOne({ email });
   if (!user) throw new CustomError("Invalid credentials", 401);
 
+  if (user.blocked) {
+    throw new CustomError("You are blocked, Please contact the admin", 403); 
+  }
+
   const isMatch = await user.matchPassword(password);
   if (!isMatch) throw new CustomError("Invalid credentials", 401);
 
   return user;
 };
+
 
 //load current user
 export const getMeService = async (userId) => {

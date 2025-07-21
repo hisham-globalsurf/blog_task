@@ -42,11 +42,14 @@ export const updateBlogService = async (blog, updateData) => {
 
 
 // Delete blog
-export const deleteBlog = async (id, userId) => {
+export const deleteBlog = async (id, user) => {
   const blog = await Blog.findById(id);
   if (!blog) throw new CustomError('Blog not found', 404);
 
-  if (blog.createdBy.toString() !== userId) {
+  const isOwner = blog.createdBy.toString() === user.id;
+  const isAdmin = user.role === "admin";
+
+  if (!isOwner && !isAdmin) {
     throw new CustomError('Not authorized to delete this blog', 403);
   }
 

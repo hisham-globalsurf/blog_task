@@ -3,13 +3,15 @@ import authService from "./authService";
 
 const initialState = {
   user: null,
+  isAdmin: null,
   isLoading: false,
   error: null,
+  loadingUser: false,
 };
 
 export const login = createAsyncThunk("auth/login", authService.login);
 export const register = createAsyncThunk("auth/register", authService.register);
-export const loadUser = createAsyncThunk('auth/loadUser', authService.loadUser);
+export const loadUser = createAsyncThunk("auth/loadUser", authService.loadUser);
 export const logout = createAsyncThunk("auth/logout", authService.logout);
 
 const authSlice = createSlice({
@@ -26,6 +28,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
+        state.isAdmin = action.payload.user?.role === "admin";
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
@@ -50,6 +53,7 @@ const authSlice = createSlice({
       })
       .addCase(loadUser.fulfilled, (state, action) => {
         state.user = action.payload;
+        state.isAdmin = action.payload?.role === "admin";
         state.loadingUser = false;
       })
       .addCase(loadUser.rejected, (state, action) => {
@@ -61,6 +65,7 @@ const authSlice = createSlice({
       // Logout
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
+        state.isAdmin = null;
       });
   },
 });

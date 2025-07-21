@@ -1,5 +1,3 @@
-"use client";
-
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,17 +5,27 @@ import { fetchBlogById } from "../features/blog/blogSlice";
 import { Badge } from "../components/ui/badge";
 import { Card, CardContent } from "../components/ui/card";
 import { Calendar, Tag, FolderOpen, Pen } from "lucide-react";
+import { fetchComments, addComment } from "../features/comment/commentSlice";
+import CommentSection from "../components/blog/singleBlog/CommentSection";
 
 const SingleBlogPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { singleBlog, isLoading } = useSelector((state) => state.blog);
+  const { comments, loading: commentsLoading } = useSelector(
+    (state) => state.comment
+  );
+
+  console.log(comments);
+  
 
   useEffect(() => {
     dispatch(fetchBlogById(id));
   }, [id, dispatch]);
 
-  console.log(singleBlog);
+  useEffect(() => {
+    dispatch(fetchComments(id));
+  }, [id, dispatch]);
 
   if (isLoading || !singleBlog) {
     return (
@@ -39,7 +47,7 @@ const SingleBlogPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100">
+    <div className="min-h-screen bg-slate-100 pb-10">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
@@ -109,7 +117,7 @@ const SingleBlogPage = () => {
           <div className="lg:col-span-3">
             <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
               <CardContent className="p-8 lg:p-12">
-                <div className="prose prose-lg prose-gray max-w-none">
+                <div className="h-[430px] overflow-y-auto pr-2 custom-scrollbar">
                   <p className="text-xl leading-relaxed text-gray-700 font-light whitespace-pre-line break-words">
                     {singleBlog.description}
                   </p>
@@ -122,8 +130,8 @@ const SingleBlogPage = () => {
           <div className="lg:col-span-1 space-y-6">
             {/* Tags */}
             {singleBlog.tags && singleBlog.tags.length > 0 && (
-              <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-                <CardContent className="p-6">
+              <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm h-[160px] overflow-scroll scrollbar-hidden">
+                <CardContent className="p-6 overflow-y-auto custom-scrollbar">
                   <div className="flex items-center space-x-2 mb-4">
                     <Tag className="w-5 h-5 text-gray-600" />
                     <h3 className="font-semibold text-gray-900">Tags</h3>
@@ -144,8 +152,8 @@ const SingleBlogPage = () => {
             )}
 
             {/* Category Card */}
-            <Card className="shadow-lg border-0 bg-gradient-to-br from-blue-50 to-indigo-50">
-              <CardContent className="p-6">
+            <Card className="shadow-lg border-0 bg-gradient-to-br from-blue-50 to-indigo-50 h-[160px] overflow-scroll scrollbar-hidden">
+              <CardContent className="p-6 flex flex-col justify-center items-center text-center">
                 <div className="text-center">
                   <FolderOpen className="w-8 h-8 text-blue-600 mx-auto mb-2" />
                   <h3 className="font-semibold text-gray-900 mb-1">Category</h3>
@@ -157,12 +165,12 @@ const SingleBlogPage = () => {
             </Card>
 
             {/* Additional Info Card */}
-            <Card className="shadow-lg border-0 bg-gradient-to-br from-green-50 to-emerald-200">
-              <CardContent className="p-6">
+            <Card className="shadow-lg border-0 bg-gradient-to-br from-green-50 to-emerald-200 h-[160px] overflow-scroll scrollbar-hidden">
+              <CardContent className="p-6 flex flex-col justify-center items-center text-center">
                 <div className="text-center">
                   <Calendar className="w-8 h-8 text-green-600 mx-auto mb-2" />
                   <h3 className="font-semibold text-gray-900 mb-1">
-                    {singleBlog.createdAt.slice(0,10)}
+                    {singleBlog.createdAt.slice(0, 10)}
                   </h3>
                   <p className="text-green-800 text-[12px] font-medium flex flex-col">
                     <p>Name: {singleBlog.createdBy.name}</p>
@@ -174,6 +182,13 @@ const SingleBlogPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Comments Section */}
+      <CommentSection
+        blogId={id}
+        comments={comments}
+        loading={commentsLoading}
+      />
     </div>
   );
 };

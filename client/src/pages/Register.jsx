@@ -18,9 +18,13 @@ const Register = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(register(form));
+
+    const result = await dispatch(register(form));
+    if (result.meta.requestStatus === "fulfilled") {
+      navigate("/", { state: { fromAuth: true } });
+    }
   };
 
   return (

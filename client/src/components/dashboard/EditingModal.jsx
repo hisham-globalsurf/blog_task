@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import {
   Dialog,
@@ -65,7 +64,9 @@ export default function EditBlogModal({ blog, onUpdate, children }) {
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="w-full max-w-xl md:max-w-3xl overflow-hidden">
-        <DialogHeader className={"font-bold text-[20px]"}>Edit Blog</DialogHeader>
+        <DialogHeader className={"font-bold text-[20px]"}>
+          Edit Blog
+        </DialogHeader>
 
         <div className="space-y-4 py-4 max-h-[70vh] overflow-y-auto scrollbar-hidden">
           <div className="grid md:grid-cols-2 md:gap-6">
@@ -97,9 +98,8 @@ export default function EditBlogModal({ blog, onUpdate, children }) {
               <Textarea
                 placeholder="Description"
                 value={description}
-                rows={6}
                 onChange={(e) => setDescription(e.target.value)}
-                className="h-40 md:h-full resize-none overflow-y-auto"
+                className="h-40 overflow-y-auto resize-none"
               />
             </div>
           </div>

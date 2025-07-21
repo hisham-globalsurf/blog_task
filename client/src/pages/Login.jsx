@@ -18,9 +18,14 @@ const Login = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(login(form));
+
+    const result = await dispatch(login(form));
+
+    if (result.meta.requestStatus === "fulfilled") {
+      navigate("/", { state: { fromAuth: true } });
+    }
   };
 
   return (
@@ -80,7 +85,7 @@ const Login = () => {
             type="submit"
             className="w-full bg-indigo-600 text-white hover:bg-indigo-700 transition rounded-md"
           >
-            {loading ? "Creating account..." : "Register"}
+            {loading ? "Loading..." : "Login"}
           </Button>
 
           <p

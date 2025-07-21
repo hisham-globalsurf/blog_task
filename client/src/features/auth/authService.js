@@ -40,12 +40,14 @@ export const loadUser = async (_, thunkAPI) => {
     return res.data;
   } catch (err) {
     const status = err.response?.status;
+        console.log("LOAD USER ERROR", err.response?.status, err.message); // <-- add this
     const message = err.response?.data?.message || err.message;
-    if (status === 401) {
+    if (status === 401 || status === 500 || message == "Network Error") {
       return thunkAPI.rejectWithValue(null);
     }
     return thunkAPI.rejectWithValue(message);
   }
+
 };
 
 export default { login, register, logout, loadUser };

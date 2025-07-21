@@ -12,6 +12,8 @@ export const createComment = async ({ blogId, userId, content }) => {
     user: userId,
   });
 
+  await comment.populate("user", "name email");
+
   return comment;
 };
 

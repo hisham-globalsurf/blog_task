@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 
 const BlogCard = ({ blog }) => (
-  <Link to={`/blog/${blog._id}`} className="block group hover:no-underline">
-    <div className="transition-all duration-300 border-0 shadow-md hover:shadow-xl hover:-translate-y-1 rounded-lg overflow-hidden">
+  <Link to={`/blog/${blog._id}`} className="block group hover:no-underline h-full">
+    <div className="transition-all duration-300 border shadow-md hover:shadow-xl hover:-translate-y-1 rounded-lg overflow-hidden flex flex-col h-full">
+      {/* Image Section */}
       {blog.attachments && blog.attachments.length > 0 && (
         <div className="relative overflow-hidden h-48">
           <img
@@ -13,24 +14,31 @@ const BlogCard = ({ blog }) => (
         </div>
       )}
 
-      <div className="p-4">
-        <h2 className="text-xl font-semibold mb-2 group-hover:text-blue-600 transition-colors">
+      {/* Content Section */}
+
+      <div className="p-4 flex flex-col flex-1 overflow-hidden">
+      <div className="w-[300px] lg:w-full">
+        <h2 className="text-xl font-semibold mb-2 group-hover:text-blue-600 transition-colors overflow-hidden">
           {blog.title}
         </h2>
-        <p className="text-gray-700 mb-3 line-clamp-3">
+      </div>
+
+        <div className="text-gray-700 mb-3 text-sm overflow-hidden w-[300px] lg:w-full">
           {blog.description}
-        </p>
-        <div className="flex flex-wrap gap-1 mb-3">
-          {blog.tags.map((tag) => (
+        </div>
+
+        <div className="flex flex-wrap gap-1 mb-3 overflow-hidden max-h-[50px]">
+          {blog.tags.map((tag, index) => (
             <span
-              key={tag}
-              className="bg-gray-200 text-xs rounded-full px-2 py-1"
+              key={`${tag}-${index}`}
+              className="bg-gray-200 text-xs rounded-full px-2 py-1 "
             >
               {tag}
             </span>
           ))}
         </div>
-        <div className="text-sm text-gray-500">
+
+        <div className="text-sm text-gray-500 truncate mt-auto">
           Category: {blog.category}
         </div>
       </div>
@@ -38,4 +46,5 @@ const BlogCard = ({ blog }) => (
   </Link>
 );
 
-export default BlogCard;
+
+export default BlogCard

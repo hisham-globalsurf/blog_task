@@ -9,6 +9,7 @@ import errorHandler from "./middlewares/error.middleware.js";
 import authRoutes from "./routes/auth.routes.js";
 import blogRoutes from "./routes/blog.routes.js";
 import commentRoutes from "./routes/comment.routes.js";
+import adminRoutes from "./routes/admin.routes.js";
 connectDB();
 
 const app = express();
@@ -29,7 +30,8 @@ app.get("/home", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/blog", blogRoutes);
-app.use("/api/comment", commentRoutes);
+app.use("/api/comments", commentRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.use(errorHandler);
 

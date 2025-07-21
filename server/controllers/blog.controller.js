@@ -21,7 +21,7 @@ export const getBlogById = async (req, res, next) => {
   }
 };
 
-// admin's blog
+// individual's blogs
 export const getMyBlogs = async (req, res, next) => {
   try {
     const blogs = await blogService.getBlogsByUser(req.user.id);
@@ -61,18 +61,20 @@ export const updateBlogService = async (blog, updateData) => {
   return blog;
 };
 
-
 // update blog
 export const updateBlog = async (req, res, next) => {
   try {
-    const newUploads = req.files?.map(file => file.path) || [];
+    const newUploads = req.files?.map((file) => file.path) || [];
 
     const existingBlog = await Blog.findById(req.params.id);
     if (!existingBlog) {
       return res.status(404).json({ message: "Blog not found" });
     }
 
-    if (existingBlog.createdBy.toString() !== req.user.id) {
+    const isOwner = existingBlog.createdBy.toString() === req.user.id;
+    const isAdmin = req.user.role === "admin";
+
+    if (!isOwner && !isAdmin) {
       return res.status(403).json({ message: "Not authorized" });
     }
 
@@ -99,7 +101,7 @@ export const updateBlog = async (req, res, next) => {
     if (Array.isArray(req.body.tags)) {
       tags = req.body.tags;
     } else if (typeof req.body.tags === "string") {
-      tags = req.body.tags.split(",").map(tag => tag.trim());
+      tags = req.body.tags.split(",").map((tag) => tag.trim());
     }
 
     // Call service
@@ -118,14 +120,13 @@ export const updateBlog = async (req, res, next) => {
   }
 };
 
-
-
 // Delete blog
 export const deleteBlog = async (req, res, next) => {
   try {
-    await blogService.deleteBlog(req.params.id, req.user.id);
+    await blogService.deleteBlog(req.params.id, req.user);
     res.json({ success: true, message: "Blog deleted" });
   } catch (err) {
     next(err);
   }
 };
+
