@@ -20,9 +20,29 @@ import { Toaster } from "./components/ui/sonner";
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { user, loadingUser } = useSelector((state) => state.auth);
+  const { user, isLoading, loadingUser } = useSelector((state) => state.auth);
+  const { isLoading: blogLoading } = useSelector((state) => state.blog);
 
   const fromAuth = location.state?.fromAuth;
+
+    if (blogLoading || isLoading || loadingUser) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse space-y-4 w-full max-w-4xl mx-auto px-4">
+          <div className="h-12 bg-gray-200 rounded-lg"></div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="h-64 bg-gray-200 rounded-lg"></div>
+            ))}
+          </div>
+          <div className="space-y-2">
+            <div className="h-4 bg-gray-200 rounded w-full"></div>
+            <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     dispatch(loadUser());
