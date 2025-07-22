@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 
 const BlogCard = ({ blog }) => (
-  <Link to={`/blog/${blog._id}`} className="block group hover:no-underline h-full">
+  <Link
+    to={`/blog/${blog._id}`}
+    className="block group hover:no-underline h-full"
+  >
     <div className="transition-all duration-300 border shadow-md hover:shadow-xl hover:-translate-y-1 rounded-lg overflow-hidden flex flex-col h-full">
       {/* Image Section */}
       {blog.attachments && blog.attachments.length > 0 && (
@@ -17,13 +20,13 @@ const BlogCard = ({ blog }) => (
       {/* Content Section */}
 
       <div className="p-4 flex flex-col flex-1 overflow-hidden">
-      <div className="w-[300px] lg:w-full">
-        <h2 className="text-xl font-semibold mb-2 group-hover:text-blue-600 transition-colors overflow-hidden">
-          {blog.title}
-        </h2>
-      </div>
+        <div className="w-[300px] lg:w-full">
+          <h2 className="text-xl font-semibold mb-2 group-hover:text-blue-600 transition-colors overflow-hidden">
+            {blog.title}
+          </h2>
+        </div>
 
-        <div className="text-gray-700 mb-3 text-sm overflow-hidden w-[300px] lg:w-full">
+        <div className="text-gray-700 mb-5 text-sm w-[300px] lg:w-full line-clamp-5">
           {blog.description}
         </div>
 
@@ -46,5 +49,4 @@ const BlogCard = ({ blog }) => (
   </Link>
 );
 
-
-export default BlogCard
+export default BlogCard;

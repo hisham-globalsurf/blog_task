@@ -23,9 +23,9 @@ const HomePage = () => {
     dispatch(fetchAllBlogs());
   }, [dispatch]);
 
-  const filteredBlogs = blogs.filter(blog =>
-  blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  blog.description.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredBlogs = blogs?.filter(blog =>
+  blog?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  blog?.description?.toLowerCase().includes(searchQuery.toLowerCase())
 );
 
   return (
