@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Sidebar from "../../components/admin/SideBar";
-import Users from "../admin/Users";
-import Blogs from "../admin/Blogs";
+import Sidebar from "@/components/admin/Sidebar";
+import Users from "./Users";
+import Blogs from "./Blogs";
 
 const AdminDashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
