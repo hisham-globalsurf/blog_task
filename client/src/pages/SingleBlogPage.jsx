@@ -12,7 +12,7 @@ import { Helmet } from "react-helmet";
 const SingleBlogPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { singleBlog } = useSelector((state) => state.blog);
+  const { singleBlog, isLoading } = useSelector((state) => state.blog);
   const { comments, loading: commentsLoading } = useSelector(
     (state) => state.comment
   );
@@ -25,7 +25,7 @@ const SingleBlogPage = () => {
     dispatch(fetchComments(id));
   }, [id, dispatch]);
 
-  if (!singleBlog) {
+  if (!singleBlog || isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-pulse space-y-4 w-full max-w-4xl mx-auto px-4">
