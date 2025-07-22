@@ -16,9 +16,6 @@ const SingleBlogPage = () => {
     (state) => state.comment
   );
 
-  console.log(comments);
-  
-
   useEffect(() => {
     dispatch(fetchBlogById(id));
   }, [id, dispatch]);
@@ -26,6 +23,25 @@ const SingleBlogPage = () => {
   useEffect(() => {
     dispatch(fetchComments(id));
   }, [id, dispatch]);
+
+  if (!singleBlog) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse space-y-4 w-full max-w-4xl mx-auto px-4">
+          <div className="h-12 bg-gray-200 rounded-lg"></div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="h-64 bg-gray-200 rounded-lg"></div>
+            ))}
+          </div>
+          <div className="space-y-2">
+            <div className="h-4 bg-gray-200 rounded w-full"></div>
+            <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-100 pb-10">

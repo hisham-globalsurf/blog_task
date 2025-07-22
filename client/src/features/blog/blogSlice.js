@@ -14,18 +14,22 @@ export const fetchAllBlogs = createAsyncThunk(
   "blog/fetchAll",
   blogService.getAllBlogs
 );
+
 export const fetchBlogById = createAsyncThunk(
   "blog/fetchById",
   blogService.getBlogById
 );
+
 export const fetchMyBlogs = createAsyncThunk(
   "blog/fetchMyBlogs",
   blogService.getMyBlogs
 );
+
 export const createBlog = createAsyncThunk(
   "blog/create",
   blogService.createBlog
 );
+
 export const updateBlog = createAsyncThunk(
   "blog/update",
   blogService.updateBlog
@@ -42,9 +46,10 @@ const blogSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // All blogs
+      // Fetch All Blogs
       .addCase(fetchAllBlogs.pending, (state) => {
         state.isLoading = true;
+        state.error = null;
       })
       .addCase(fetchAllBlogs.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -54,28 +59,78 @@ const blogSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message;
       })
-      // Single blog
+
+      // Fetch Single Blog
+      .addCase(fetchBlogById.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(fetchBlogById.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.singleBlog = action.payload.blog;
       })
-      // My blogs
+      .addCase(fetchBlogById.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+
+      // Fetch My Blogs
+      .addCase(fetchMyBlogs.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(fetchMyBlogs.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.myBlogs = action.payload.blogs;
       })
-      // Create
+      .addCase(fetchMyBlogs.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+
+      // Create Blog
+      .addCase(createBlog.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(createBlog.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.myBlogs.push(action.payload.blog);
       })
-      // Update
+      .addCase(createBlog.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+
+      // Update Blog
+      .addCase(updateBlog.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(updateBlog.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.myBlogs = state.myBlogs.map((blog) =>
           blog._id === action.payload.blog._id ? action.payload.blog : blog
         );
       })
-      // Delete
+      .addCase(updateBlog.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+
+      // Delete Blog
+      .addCase(deleteBlog.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(deleteBlog.fulfilled, (state, action) => {
+        state.isLoading = false;
         const deletedId = action.meta.arg;
         state.myBlogs = state.myBlogs.filter((blog) => blog._id !== deletedId);
+      })
+      .addCase(deleteBlog.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
       });
   },
 });

@@ -1,5 +1,10 @@
 import { useEffect } from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "./features/auth/authSlice";
 import Navbar from "./components/layout/Navbar";
@@ -15,8 +20,7 @@ import { Toaster } from "./components/ui/sonner";
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { user, isLoading, loadingUser } = useSelector((state) => state.auth);
-  const { isLoading: blogLoading } = useSelector((state) => state.blog);
+  const { user, loadingUser } = useSelector((state) => state.auth);
 
   const fromAuth = location.state?.fromAuth;
 
@@ -24,7 +28,7 @@ function App() {
     dispatch(loadUser());
   }, [dispatch]);
 
-  if (blogLoading || isLoading || loadingUser) {
+  if (loadingUser) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-pulse space-y-4 w-full max-w-4xl mx-auto px-4">
@@ -77,20 +81,13 @@ function App() {
           }
         />
 
-        <Route
-          path="/blog/:id"
-          element={user ? <SingleBlogPage /> : <Login />}
-        />
+        <Route path="/blog/:id" element={ user ? <SingleBlogPage /> : <Login />} />
 
         <Route
           path="/dashboard"
           element={
             user ? (
-              user.role === "admin" ? (
-                <Navigate to="/adminDashboard" />
-              ) : (
-                <Dashboard />
-              )
+              user.role === "admin" ? <Navigate to="/adminDashboard" /> : <Dashboard />
             ) : (
               <Navigate to="/login" />
             )
@@ -101,11 +98,7 @@ function App() {
           path="/adminDashboard"
           element={
             user ? (
-              user.role === "admin" ? (
-                <AdminDashboard />
-              ) : (
-                <Navigate to="/dashboard" />
-              )
+              user.role === "admin" ? <AdminDashboard /> : <Navigate to="/dashboard" />
             ) : (
               <Navigate to="/login" />
             )
