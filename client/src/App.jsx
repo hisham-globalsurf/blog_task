@@ -1,10 +1,5 @@
 import { useEffect } from "react";
-import {
-  Routes,
-  Route,
-  Navigate,
-  useLocation,
-} from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "./features/auth/authSlice";
 import Navbar from "./components/layout/Navbar";
@@ -81,15 +76,19 @@ function App() {
           }
         />
 
-        <Route path="/blog/:id" element={ user ? <SingleBlogPage /> : <Login />} />
+        <Route path="/blog/:id" element={<SingleBlogPage />} />
 
         <Route
           path="/dashboard"
           element={
             user ? (
-              user.role === "admin" ? <Navigate to="/adminDashboard" /> : <Dashboard />
+              user.role === "admin" ? (
+                <Navigate to="/adminDashboard" />
+              ) : (
+                <Dashboard />
+              )
             ) : (
-              <Navigate to="/login" />
+              <Navigate to="/" />
             )
           }
         />
@@ -98,9 +97,13 @@ function App() {
           path="/adminDashboard"
           element={
             user ? (
-              user.role === "admin" ? <AdminDashboard /> : <Navigate to="/dashboard" />
+              user.role === "admin" ? (
+                <AdminDashboard />
+              ) : (
+                <Navigate to="/dashboard" />
+              )
             ) : (
-              <Navigate to="/login" />
+              <Navigate to="/" />
             )
           }
         />
