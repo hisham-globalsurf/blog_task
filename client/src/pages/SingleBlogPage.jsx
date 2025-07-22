@@ -52,7 +52,7 @@ const SingleBlogPage = () => {
           name="description"
           content={singleBlog?.description?.slice(0, 150)}
         />
-        
+
         <meta property="og:title" content={singleBlog?.title} />
         <meta
           property="og:description"
@@ -75,7 +75,7 @@ const SingleBlogPage = () => {
                 </div>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight max-w-4xl mx-auto">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight max-w-4xl mx-auto">
                 {singleBlog.title}
               </h1>
 
