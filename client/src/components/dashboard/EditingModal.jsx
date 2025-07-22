@@ -57,7 +57,6 @@ export default function EditBlogModal({ blog, onUpdate, children }) {
       },
     };
     onUpdate(updatedBlog);
-    toast.success("Blog updated!");
   };
 
   return (

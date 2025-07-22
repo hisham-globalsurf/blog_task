@@ -57,8 +57,6 @@ export default function MyBlogs({ data, onDelete }) {
       ).unwrap().then(()=>{
         dispatch(fetchAllBlogs())
       })
-
-      toast.success("Blog updated!");
     } catch (err) {
       toast.error("Update failed");
     }
@@ -118,7 +116,6 @@ export default function MyBlogs({ data, onDelete }) {
                 <AlertDialogAction
                   onClick={() => {
                     onDelete(row.original._id);
-                    toast.success("Blog deleted!");
                   }}
                   className="bg-red-600 hover:bg-red-700 text-white"
                 >
