@@ -28,6 +28,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    navigate("/login");
   };
 
   const isOnDashboard =
@@ -50,7 +51,7 @@ const Navbar = () => {
   return (
     <nav className="w-full bg-gradient-to-r from-sky-400 via-cyan-500 to-indigo-600 text-white border-b border-white/50 px-6 py-4 flex justify-between items-center shadow-sm">
       {/* Logo */}
-      <div>
+      <div onClick={() => navigate("/")}>
         <h1 className="text-xl font-bold text-white/80 tracking-tight">
           Bloggy
         </h1>
@@ -77,7 +78,7 @@ const Navbar = () => {
             <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow z-50">
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                className="flex items-center rounded-lg gap-2 w-full px-4 py-2 text-sm text-red-600 bg-gray-100 hover:bg-gray-200"
               >
                 <LogOut size={16} />
                 Logout
