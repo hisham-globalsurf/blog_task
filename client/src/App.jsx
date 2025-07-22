@@ -28,10 +28,6 @@ function App() {
     dispatch(loadUser());
   }, [dispatch]);
 
-  if (loadingUser) {
-    return <div className="w-full h-screen flex items-center justify-center">Loading...</div>;
-  }
-
   return (
     <>
       <Toaster />
