@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Sidebar from "@/components/admin/Sidebar";
 import Users from "./Users";
 import Blogs from "./Blogs";
+import ContactList from "./ContactList";
 
 const AdminDashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -13,6 +14,8 @@ const AdminDashboard = () => {
         return <Users />;
       case "blogs":
         return <Blogs />;
+      case "forms":
+        return <ContactList />;
       default:
         return null;
     }

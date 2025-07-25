@@ -1,5 +1,5 @@
 import React from "react";
-import { Users, FileText, ChevronLeft, ChevronRight } from "lucide-react";
+import { Users, FileText, ChevronLeft, ChevronRight, Contact } from "lucide-react";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
 
@@ -8,6 +8,7 @@ const Sidebar = ({ collapsed, setCollapsed, activeTab, setActiveTab }) => {
   const navItems = [
     { key: "users", label: "Users", icon: <Users size={20} /> },
     { key: "blogs", label: "Blogs", icon: <FileText size={20} /> },
+    { key: "forms", label: "Forms", icon: <Contact size={20} /> },
   ];
 
   return (
