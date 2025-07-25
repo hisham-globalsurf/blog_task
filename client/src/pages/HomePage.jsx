@@ -12,21 +12,21 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { blogs, isLoading } = useSelector((state) => state.blog);
-  
+
   const { user } = useSelector((state) => state.auth);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [open, setOpen] = useState(false);
 
-
   useEffect(() => {
     dispatch(fetchAllBlogs());
   }, [dispatch]);
 
-  const filteredBlogs = blogs?.filter(blog =>
-  blog?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  blog?.description?.toLowerCase().includes(searchQuery.toLowerCase())
-);
+  const filteredBlogs = blogs?.filter(
+    (blog) =>
+      blog?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      blog?.description?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">

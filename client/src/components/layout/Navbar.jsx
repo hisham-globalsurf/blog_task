@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LogOut, User } from "lucide-react";
+import { LogOut, User, ContactRoundIcon } from "lucide-react";
 import { logout } from "@/features/auth/authSlice";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -48,7 +48,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full bg-gradient-to-r from-sky-400 via-cyan-500 to-indigo-600 text-white border-b border-white/50 px-6 py-4 flex justify-between items-center shadow-sm">
+    <div className="w-full bg-gradient-to-r from-sky-400 via-cyan-500 to-indigo-600 text-white border-b border-white/50 px-6 py-4 flex justify-between items-center shadow-sm">
       {/* Logo */}
       <div onClick={() => navigate("/")}>
         <h1 className="text-xl font-bold text-white/80 tracking-tight">
@@ -58,6 +58,11 @@ const Navbar = () => {
 
       {/* Profile Dropdown */}
       <div className="flex justify-center items-center gap-4 md:gap-10 cursor-pointer">
+        {user.role != "admin" && (
+          <h1 onClick={() => navigate("/contact-us")}>
+            <ContactRoundIcon size={25} />
+          </h1>
+        )}
         <h1
           onClick={handleDashboardClick}
           className="hover:underline-offset-4 hover:underline"
@@ -86,7 +91,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
-    </nav>
+    </div>
   );
 };
 

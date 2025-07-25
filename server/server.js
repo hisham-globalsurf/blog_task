@@ -10,6 +10,7 @@ import authRoutes from "./routes/auth.routes.js";
 import blogRoutes from "./routes/blog.routes.js";
 import commentRoutes from "./routes/comment.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
+import contactRoutes from "./routes/contact.routes.js"
 connectDB();
 
 const app = express();
@@ -32,6 +33,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/blog", blogRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/contact-us", contactRoutes);
 
 app.use(errorHandler);
 

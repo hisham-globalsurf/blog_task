@@ -11,6 +11,7 @@ import Dashboard from "./pages/user/Dashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import NotFoundPage from "./components/layout/NotFoundPage";
 import { Toaster } from "./components/ui/sonner";
+import ContactPage from "./pages/user/ContactPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/contact-us" element={<ContactPage />} />
 
         <Route
           path="/login"
